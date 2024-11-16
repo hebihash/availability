@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&family=Teachers:ital,wght@0,400..800;1,400..800&display=swap"
+      rel="stylesheet"
+    />
+    <title>Hebihash</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+        overflow: hidden;
+        flex-direction: column;
+        text-align: center;
+      }
+      .video-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+      }
+      .title {
+        font-family: "Sour Gummy", sans-serif;
+        font-size: 36px;
+        font-weight: 900;
+        color: #14dad3;
+        margin-bottom: 20px;
+      }
+      .calendar {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 5px;
+        width: 90%;
+        max-width: 900px;
+        background-color: rgba(255, 255, 255, 0.233);
+        border-radius: 10px;
+        font-family: "Sour Gummy", sans-serif;
+        padding: 20px;
+      }
+      .calendar-header,
+      .day {
+        background-color: #14dad3;
+        color: rgb(0, 0, 0);
+        text-align: center;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+      .day {
+        background-color: #ffffff;
+        color: #333;
+      }
+      .today {
+        background-color: #000000;
+        color: white;
+      }
+      .available {
+        background-color: #90ee90; /* Light green */
+      }
+      .booked {
+        background-color: #ff6347; /* Tomato red */
+        color: white;
+      }
+
+      /* Responsive styles */
+      @media (max-width: 768px) {
+        .calendar {
+          gap: 3px;
+        }
+        .calendar-header,
+        .day {
+          padding: 8px;
+          font-size: 12px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .calendar {
+          gap: 3px;
+        }
+        .calendar-header,
+        .day {
+          padding: 4px;
+          font-size: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <video class="video-background" autoplay muted loop>
+      <source src="images/3.MOV" type="video/mp4" />
+      Oops!!
+    </video>
+    <div class="title">HebiHash Availability</div>
+    <div id="calendar" class="calendar"></div>
+
+    <script>
+      const calendar = document.getElementById("calendar");
+      const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const date = new Date();
+      const currentMonth = date.getMonth();
+      const currentYear = date.getFullYear();
+      const today = date.getDate();
+
+      // Arrays to store available and booked days (format: day numbers)
+      const availableDays = [21, 27, 20];
+      const bookedDays = [18, 25];
+
+      function createCalendar(year, month) {
+        // Get the first day of the month
+        const firstDay = new Date(year, month, 1).getDay();
+        // Get the number of days in the month
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        // Add the days of the week headers
+        daysOfWeek.forEach((day) => {
+          const header = document.createElement("div");
+          header.classList.add("calendar-header");
+          header.textContent = day;
+          calendar.appendChild(header);
+        });
+
+        // Create empty spaces for days before the first day of the month
+        for (let i = 0; i < firstDay; i++) {
+          const emptyCell = document.createElement("div");
+          emptyCell.classList.add("day");
+          calendar.appendChild(emptyCell);
+        }
+
+        // Fill in the days of the month
+        for (let day = 1; day <= daysInMonth; day++) {
+          const dayCell = document.createElement("div");
+          dayCell.classList.add("day");
+
+          if (day === today && month === currentMonth && year === currentYear) {
+            dayCell.classList.add("today");
+          }
+
+          if (availableDays.includes(day)) {
+            dayCell.classList.add("available");
+            dayCell.textContent = `${day} (Available)`;
+          } else if (bookedDays.includes(day)) {
+            dayCell.classList.add("booked");
+            dayCell.textContent = `${day} (Booked)`;
+          } else {
+            dayCell.textContent = day;
+          }
+
+          calendar.appendChild(dayCell);
+        }
+      }
+
+      createCalendar(currentYear, currentMonth);
+    </script>
+  </body>
+</html>
