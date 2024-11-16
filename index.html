@@ -91,26 +91,52 @@
         filter: sepia(0.8);
       }
 
-      /* Responsive styles */
       @media (max-width: 768px) {
+        /* Small tablets and large mobile */
+        .title {
+          font-size: 24px; /* Slightly smaller font for mobile */
+        }
+
         .calendar {
           gap: 3px;
+          width: 95%;
         }
+
         .calendar-header,
         .day {
           padding: 8px;
           font-size: 12px;
         }
+
+        .logo img {
+          width: 140px; /* Adjust logo size for mobile */
+        }
       }
 
       @media (max-width: 480px) {
-        .calendar {
-          gap: 3px;
+        /* Mobile */
+        body {
+          padding: 10px; /* Add some padding for mobile */
         }
+
+        .title {
+          font-size: 20px; /* Further adjust title size */
+          margin-bottom: 10px;
+        }
+
+        .calendar {
+          width: 100%;
+          padding: 10px;
+        }
+
         .calendar-header,
         .day {
-          padding: 4px;
-          font-size: 8px;
+          padding: 6px;
+          font-size: 10px;
+        }
+
+        .logo img {
+          width: 120px; /* Smaller logo for mobile */
         }
       }
     </style>
